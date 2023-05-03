@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  font-family: "Quicksand";
+  color: #333;
+}
+
+.App {
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* App */
+.article {
+  max-width: 1000px;
+  flex: 1;
+  margin-right: 20px;
+  border: 1px solid rgb(153, 142, 142);
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.guess-words {
+  flex: 1;
+  max-width: 400px;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.extract {
+  color: #666;
+}
+
+.words-box {
+  margin-left: 20px;
+  padding: 15px;
+  border: 1px solid rgb(8, 0, 53);
+  border-radius: 5px;
+  background-color: #c0d0f8;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.guessed-words-list p {
+  margin-bottom: 14px;
+}
+
+button.submit-guess {
+  display: inline-block;
+  margin: 10px 5px;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border-radius: 4px;
+}
+
+button.submit-guess:hover {
+  background-color: rgb(217, 217, 217);
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+}
+
+.input-row label {
+  margin-right: 10px;
+}
+
+@media (max-width: 700px) {
+  .App {
+    flex-direction: column;
+  }
+
+  .guess-words {
+    position: fixed;
+    bottom: 0;
+    max-height: 200px;
+    overflow-y: scroll;
+  }
+}
