@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import parse from "html-react-parser";
 import "./index.css";
-import HiddenTitle from "./HiddenWordsFromArticle";
-import HiddenWordsFromArticle from "./HiddenWordsFromArticle";
+import HiddenTitle from "./HiddenTitle";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -29,8 +28,7 @@ function App() {
       const { title, extract } = getTitleAndExtract(json);
 
       setTitle(title);
-      setExtract(extract);
-      /*  setExtract(parse(extract)); */
+      setExtract(parse(extract));
     } catch (err) {
       setError(err);
     } finally {
@@ -47,16 +45,11 @@ function App() {
   return (
     <div className="App">
       <div className="article">
-        <HiddenWordsFromArticle title={title} hiddenWords={hiddenWords} />
-        <div
-          className="extract"
-          dangerouslySetInnerHTML={{ __html: extract }}
-        ></div>
+        <HiddenTitle title={title} hiddenWords={hiddenWords} />
+        <div className="extract">{extract}</div>
       </div>
     </div>
   );
 }
 
 export default App;
-
-//Jag vill göra en dangerouslySetInnerHtml i importerade hiddenTitle här eller i komponenten

@@ -14,7 +14,7 @@
 
 /* App */
 .article {
-  max-width: 1000px;
+  max-width: 1200px;
   flex: 1;
   margin-right: 20px;
   border: 1px solid rgb(153, 142, 142);
@@ -23,9 +23,11 @@
   padding: 20px;
 }
 
+/* //ändra */
 .guess-words {
   flex: 1;
   max-width: 400px;
+  margin-left: 550px;
 }
 
 h1 {
@@ -35,6 +37,26 @@ h1 {
 
 .extract {
   color: #666;
+}
+
+.extract h2 {
+  margin-top: 30px;
+}
+.extract h3 {
+  margin-top: 20px;
+}
+
+.extract h4 {
+  margin-top: 20px;
+}
+
+.extract h5 {
+  margin-top: 20px;
+}
+
+.extract p::after {
+  content: "\A\A";
+  white-space: pre;
 }
 
 .words-box {
@@ -98,3 +120,28 @@ button.submit-guess:hover {
     overflow-y: scroll;
   }
 }
+
+/* //HiddenTitle */
+.box {
+  position: relative;
+}
+
+.box:hover .box-text {
+  display: inline-block;
+}
+
+.box-text {
+  position: absolute;
+  top: 0.4em;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  background-color: #ccc;
+  color: #000;
+  font-size: 0.6em;
+}
+
+.winning-message {
+}
+
+/* //GuessedWords */
