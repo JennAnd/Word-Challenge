@@ -1,13 +1,12 @@
 import React, { useState, useRef } from "react";
+import "./index.css";
 
-//tar emot fyra props från GuessedWords component
 function GuessWords({
   hiddenWords,
   toggleWordVisibility,
   handleGuess,
   guesses,
 }) {
-  //hämtar ut värdet från gissningen från inputen, kallar på funktionen handleGuess
   const handleSubmit = (e) => {
     e.preventDefault();
     const guess = e.target.guess.value;
@@ -15,7 +14,6 @@ function GuessWords({
     e.target.reset();
   };
 
-  /*  //kallar på handleSubmit när formet är skickat */
   return (
     <div className="words-box">
       <div className="input-row">
@@ -28,7 +26,6 @@ function GuessWords({
           </button>
         </form>
       </div>
-      {/*    //array där gissningarna hamnar för att hanteras */}
       <div className="guessed-words-list">
         {guesses
           .slice(0)

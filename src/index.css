@@ -15,19 +15,12 @@
 /* App */
 .article {
   max-width: 1200px;
-  flex: 1;
+  /*   flex: 1; */
   margin-right: 20px;
-  border: 1px solid rgb(153, 142, 142);
-  border-radius: 5px;
+  /*   border: 1px solid rgb(153, 142, 142);
+  border-radius: 5px; */
   background-color: #f0f0f0;
   padding: 20px;
-}
-
-/* //ändra */
-.guess-words {
-  flex: 1;
-  max-width: 400px;
-  margin-left: 550px;
 }
 
 h1 {
@@ -59,31 +52,37 @@ h1 {
   white-space: pre;
 }
 
-.words-box {
-  margin-left: 20px;
-  padding: 15px;
-  border: 1px solid rgb(8, 0, 53);
-  border-radius: 5px;
-  background-color: #c0d0f8;
-}
-
-form {
+/* //HiddenWordsFromArticle */
+.guess-words {
+  flex: 1;
+  z-index: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
+  max-width: 500px;
+  margin-left: 550px;
+  padding: 15px;
+  border: 1px solid rgb(53, 0, 47);
+  border-radius: 5px;
+  background-color: #efd6ee;
+  position: fixed;
 }
 
-input {
-  padding: 6px 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  box-sizing: border-box;
+.box {
+  position: relative;
+}
+
+.box:hover .box-text {
   display: inline-block;
 }
 
-.guessed-words-list p {
-  margin-bottom: 14px;
+.box-text {
+  position: absolute;
+  top: 0.4em;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  background-color: #ccc;
+  color: #000;
+  font-size: 0.6em;
 }
 
 button.submit-guess {
@@ -108,40 +107,41 @@ button.submit-guess:hover {
   margin-right: 10px;
 }
 
+/* //GuessedWords */
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.guessed-words-list p {
+  margin-bottom: 14px;
+}
+
 @media (max-width: 700px) {
   .App {
     flex-direction: column;
   }
 
   .guess-words {
+    bottom: 0;
+    max-height: 200px;
+    overflow-y: scroll;
+  }
+
+  .words-box {
     position: fixed;
     bottom: 0;
     max-height: 200px;
     overflow-y: scroll;
   }
 }
-
-/* //HiddenTitle */
-.box {
-  position: relative;
-}
-
-.box:hover .box-text {
-  display: inline-block;
-}
-
-.box-text {
-  position: absolute;
-  top: 0.4em;
-  left: 50%;
-  transform: translateX(-50%);
-  display: none;
-  background-color: #ccc;
-  color: #000;
-  font-size: 0.6em;
-}
-
-.winning-message {
-}
-
-/* //GuessedWords */

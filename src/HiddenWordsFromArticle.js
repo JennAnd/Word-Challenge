@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+/* import React, { useState } from "react";
 import parse from "html-react-parser";
 import GuessWords from "./GuessWords";
 
-//tar emot title som prop
-//titeln är en string som splittas till en array och sätts i variabel words
-//useState hooken används och skapar state variabler
-function HiddenWordsFromArticle({ title, extract }) {
+function HiddenWordsFromArticle({ title }) {
   const words = title.split(" ");
   const [guesses, setGuesses] = useState([]);
-  //array av objekt, ordet och att den är gömd
+
   const [hiddenWords, setHiddenWords] = useState(
     words.map((word) => ({ word, isHidden: true }))
   );
-  //togglar isHidden
+
   const toggleWordVisibility = (index) => {
     setHiddenWords((prevState) =>
       prevState.map((wordObj, i) =>
@@ -25,7 +22,7 @@ function HiddenWordsFromArticle({ title, extract }) {
       )
     );
   };
-  /* handles en users gissningar av det gömda ordet, kollar om de matchar  */
+
   const handleGuess = (guess) => {
     const isMatch = hiddenWords.some(
       (wordObj) => wordObj.word.toLowerCase() === guess.toLowerCase()
@@ -37,11 +34,10 @@ function HiddenWordsFromArticle({ title, extract }) {
           : wordObj
       )
     );
-    //uppdaterar guesses state variabeln om det är en match
+
     setGuesses((prevState) => [...prevState, { guess, isMatch }]);
   };
 
-  /*  importerar GuessWords komponenten och tar emot props. */
   return (
     <>
       <div className="App">
@@ -57,10 +53,8 @@ function HiddenWordsFromArticle({ title, extract }) {
         </div>
       </div>
 
-      {/*  mappar igenom hiddenWords arrayen, om gömd får den styling, syns om ordet är rätt gissat */}
       <div className="title-box">
         {hiddenWords.map((hiddenWord, index) => (
-          //React.Fragment påverkar ej layouten när extra element läggs till
           <React.Fragment key={index}>
             {hiddenWord.isHidden ? (
               <h1
@@ -77,7 +71,6 @@ function HiddenWordsFromArticle({ title, extract }) {
             ) : (
               <h1 className="title" style={{ display: "inline-block" }}>
                 {hiddenWord.word}{" "}
-                {/*    <span className="winning-message">Congratulations!</span> */}
               </h1>
             )}
             {index < hiddenWords.length - 1 && <span>&nbsp;</span>}
@@ -89,5 +82,4 @@ function HiddenWordsFromArticle({ title, extract }) {
 }
 
 export default HiddenWordsFromArticle;
-
-//Jag vill styla titeln som en titel, kan ja plocka ut title här ovan och styla som h1?
+ */
