@@ -1,94 +1,75 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-
 * {
-  margin: 0;
   font-family: "Quicksand";
   color: #333;
 }
 
 .App {
-  margin: 20px;
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px;
 }
 
-/* App */
 .article {
-  max-width: 1200px;
-  /*   flex: 1; */
-  margin-right: 20px;
-  /*   border: 1px solid rgb(153, 142, 142);
-  border-radius: 5px; */
+  width: 77%;
+  margin-right: 3%;
   background-color: #f0f0f0;
   padding: 20px;
-}
-
-h1 {
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.extract {
-  color: #666;
-}
-
-.extract h2 {
-  margin-top: 30px;
-}
-.extract h3 {
-  margin-top: 20px;
-}
-
-.extract h4 {
-  margin-top: 20px;
-}
-
-.extract h5 {
-  margin-top: 20px;
-}
-
-.extract p::after {
-  content: "\A\A";
-  white-space: pre;
-}
-
-/* //HiddenWordsFromArticle */
-.guess-words {
-  flex: 1;
-  z-index: 1;
-  display: flex;
-  max-width: 500px;
-  margin-left: 550px;
-  padding: 15px;
-  border: 1px solid rgb(53, 0, 47);
-  border-radius: 5px;
-  background-color: #efd6ee;
-  position: fixed;
-}
-
-.box {
   position: relative;
 }
 
+.winning-message {
+  color: #de78d9;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.guess-words {
+  width: 20%;
+  top: 20px;
+  height: calc(100vh - 40px);
+  display: flex;
+  flex: 1;
+  z-index: 1;
+  padding: 15px;
+  border: 1px solid rgb(168, 129, 164);
+  border-radius: 5px;
+  background-color: #efd6ee;
+  position: fixed;
+  right: 0;
+}
+
+.guessed-words-list {
+  font-size: 1.2em;
+}
+
+.words-box-wrapper {
+  width: 100%;
+  margin-top: 20px;
+}
+
 .box:hover .box-text {
-  display: inline-block;
+  display: block;
 }
 
 .box-text {
   position: absolute;
-  top: 0.4em;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   display: none;
   background-color: #ccc;
-  color: #000;
-  font-size: 0.6em;
 }
 
 button.submit-guess {
   display: inline-block;
-  margin: 10px 5px;
-  padding: 5px;
+  margin-top: 6px;
+  padding: 6px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   border-radius: 4px;
@@ -98,21 +79,16 @@ button.submit-guess:hover {
   background-color: rgb(217, 217, 217);
 }
 
-.input-row {
-  display: flex;
-  align-items: center;
+.words-box label {
+  margin-right: 2px;
 }
 
-.input-row label {
-  margin-right: 10px;
-}
-
-/* //GuessedWords */
 form {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 input {
@@ -123,25 +99,132 @@ input {
   display: inline-block;
 }
 
-.guessed-words-list p {
-  margin-bottom: 14px;
+.article-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 30px auto;
+  line-height: 0.01em;
+  padding-right: 10px;
 }
 
-@media (max-width: 700px) {
-  .App {
-    flex-direction: column;
-  }
+.article-box > * {
+  margin-bottom: 10px;
+}
 
+.box {
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 1.5em;
+  margin-bottom: 10px;
+  background-color: #ccc;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 38.5%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  background-color: #ffffff;
+  border: 1px solid #333;
+  box-shadow: 0px 0px 8px #333;
+  padding: 20px;
+  max-width: 400px;
+}
+
+.instructions-text {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.instructions-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  color: #d656d2;
+}
+
+.instructions-link:hover {
+  color: #d188ce;
+}
+
+.not-hidden {
+  font-weight: normal;
+  color: #333;
+}
+
+.highlighted {
+  font-weight: bold;
+  color: #d656d2;
+}
+
+.box:first-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-size: 32px;
+  padding-left: 24px;
+  padding-right: 24px;
+  border: 1px solid #333;
+}
+
+@media (max-width: 900px) {
   .guess-words {
+    width: 100%;
+    max-height: 250px;
     bottom: 0;
-    max-height: 200px;
+    top: auto;
+    position: fixed;
+    left: 0;
+  }
+
+  .words-box-wrapper {
+    width: 100%;
+  }
+
+  .guessed-words-list {
+    max-height: 150px;
+    padding-left: 22%;
     overflow-y: scroll;
   }
 
-  .words-box {
-    position: fixed;
-    bottom: 0;
-    max-height: 200px;
-    overflow-y: scroll;
+  /*   .title {
+    font-size: 2em;
+    font-weight: bold;
+    background-color: red;
+    padding: 10px;
+    margin-bottom: 20px;
+  } */
+
+  form {
+    margin-bottom: 0px;
+  }
+
+  .article {
+    width: 100%;
+    margin-right: 0;
+  }
+  .popup {
+    top: 50%;
+    left: 50%;
+  }
+
+  .App {
+    overflow: hidden;
+  }
+}
+@media (max-width: 600px) {
+  .instructions-text {
+    font-size: 13px;
   }
 }
