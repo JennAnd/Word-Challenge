@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import GuessWords from "./GuessWords";
 import { notHiddenWords } from "./VisibleWords";
 import GameInstructions from "./GameInstructions";
+import { url } from "./UrlArticles";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -10,6 +11,15 @@ function App() {
   const [hiddenWords, setHiddenWords] = useState([]);
   const [count, setCount] = useState(0);
   const [showInstructions, setShowInstructions] = useState(false);
+
+  /*   const resetGame = () => {
+    setCount(0);
+    setHiddenWord({ word: "", showCongratulations: false });
+    const newUrl = getRandomUrl();
+    setTitle("");
+    setExtract("");
+    setUrl(newUrl);
+  }; */
 
   const handleShowInstructions = () => {
     setShowInstructions(true);
@@ -84,9 +94,11 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    const url =
-      "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Korea";
+  /* useEffect(() => {
+    const getRandomUrl = () => {
+      const randomIndex = Math.floor(Math.random() * url.length);
+      return url[randomIndex];
+    };
 
     const getTitleAndExtract = (json) => {
       const { pages } = json.query;
@@ -96,7 +108,8 @@ function App() {
 
     const fetchData = async () => {
       try {
-        const resp = await fetch(url);
+        const randomUrl = getRandomUrl();
+        const resp = await fetch(randomUrl);
         const json = await resp.json();
         const { title, extract } = getTitleAndExtract(json);
         setTitle(title);
@@ -107,6 +120,42 @@ function App() {
     };
 
     fetchData();
+  }, []); */
+  const getRandomUrl = () => {
+    const randomIndex = Math.floor(Math.random() * url.length);
+    return url[randomIndex];
+  };
+
+  const getTitleAndExtract = (json) => {
+    const { pages } = json.query;
+    const page = pages[Object.keys(pages)[0]];
+    return { title: page.title, extract: page.extract };
+  };
+
+  const fetchData = async (randomUrl) => {
+    try {
+      const resp = await fetch(randomUrl);
+      const json = await resp.json();
+      const { title, extract } = getTitleAndExtract(json);
+      setTitle(title);
+      setExtract(extract);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handlePlayAgain = () => {
+    const randomUrl = getRandomUrl();
+    fetchData(randomUrl);
+  };
+  const randomUrl = () => {
+    fetchData(); // call the fetchData function to fetch a new random URL and update the state variables
+    window.location.reload(); // refresh the page
+  };
+
+  useEffect(() => {
+    const randomUrl = getRandomUrl();
+    fetchData(randomUrl);
   }, []);
 
   useEffect(() => {
@@ -177,7 +226,7 @@ function App() {
                       <React.Fragment key={index}>
                         {(word === title || hiddenWord.word === title) &&
                         hiddenWord.showCongratulations ? (
-                          <h1>{word}</h1>
+                          <h1 className="title-word">{word}</h1>
                         ) : (
                           <p>{word} </p>
                         )}
@@ -188,8 +237,18 @@ function App() {
                       hiddenWord.word === title && (
                         <h2 className="winning-message">
                           Grattis! Du fick {count} poäng
+                          <button
+                            className="reset-game-button"
+                            onClick={randomUrl}
+                          >
+                            Spela igen?
+                          </button>
+                          {/*  //resetta guessed-list närman trycker på knappen plus att sätta inputen not disabled */}
+                          {/*     //sätt en loading här när knappen klickas på, allmänt innan en ny artikel kommer, även i början i fetchen eller useffecten  */}
+                          {/*    //fixa även så att man inte kan reloada sidan innan spelet är slut för att få en ny artikel */}
                         </h2>
                       )}
+
                     {showInstructions && (
                       <GameInstructions onClose={handleCloseInstructions} />
                     )}

@@ -1,13 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
 * {
   font-family: "Quicksand";
   color: #333;
 }
 
+/* --------App.js--------*/
 .App {
   display: flex;
   justify-content: space-between;
   margin: 20px;
+  margin-left: 12px;
 }
 
 .article {
@@ -16,45 +19,53 @@
   background-color: #f0f0f0;
   padding: 20px;
   position: relative;
+  border-radius: 4px;
 }
 
 .winning-message {
-  color: #de78d9;
+  color: #5e8ed2;
   position: absolute;
-  top: 0px;
+  top: -5px;
   left: 0;
   right: 0;
   text-align: center;
   background-color: #f0f0f0;
-  padding: 10px;
+  padding: 16px;
+  font-size: 20px;
+}
+
+.reset-game-button {
+  position: absolute;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  color: #89a6cf;
+  right: 40px;
+  font-size: 20px;
+  top: 5px;
+}
+
+.reset-game-button:hover {
+  color: #a2b3cb;
 }
 
 .guess-words {
   width: 20%;
-  top: 20px;
-  height: calc(100vh - 40px);
+  top: 0;
+  height: calc(100vh - 32px);
   display: flex;
   flex: 1;
   z-index: 1;
   padding: 15px;
-  border: 1px solid rgb(168, 129, 164);
+  border: 1px solid #c5ddff;
   border-radius: 5px;
-  background-color: #efd6ee;
+  background-color: #c5ddff;
   position: fixed;
   right: 0;
-}
-
-.guessed-words-list {
-  font-size: 1.2em;
-}
-
-.words-box-wrapper {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.box:hover .box-text {
-  display: block;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
 .box-text {
@@ -64,6 +75,84 @@
   transform: translate(-50%, -50%);
   display: none;
   background-color: #ccc;
+}
+
+.box:hover .box-text {
+  display: block;
+}
+
+.article-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 30px auto;
+  line-height: 0.01em;
+  padding-right: 10px;
+  padding-top: 50px;
+}
+
+.article-box > * {
+  margin-bottom: 10px;
+}
+
+.box {
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 1.5em;
+  margin-bottom: 10px;
+  background-color: #ccc;
+}
+
+.box:first-child {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  border: 1px solid #827e7e;
+  margin: auto;
+  font-size: 32px;
+  padding-left: 24px;
+  padding-right: 24px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.title-word {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  margin: auto;
+  z-index: 3;
+}
+
+.instructions-link {
+  position: absolute;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  color: #89a6cf;
+  right: 40px;
+}
+
+.instructions-link:hover {
+  color: #a2b3cb;
+}
+
+/* --------GuessWords.js-------- */
+.guessed-words-list {
+  font-size: 18px;
+  padding-left: 10px;
+}
+
+.words-box-wrapper {
+  width: 100%;
+  margin-top: 20px;
+  /*   max-height: 100vh;
+  overflow-y: scroll; */
 }
 
 button.submit-guess {
@@ -99,30 +188,7 @@ input {
   display: inline-block;
 }
 
-.article-box {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  margin: 30px auto;
-  line-height: 0.01em;
-  padding-right: 10px;
-}
-
-.article-box > * {
-  margin-bottom: 10px;
-}
-
-.box {
-  display: inline-flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  height: 1.5em;
-  margin-bottom: 10px;
-  background-color: #ccc;
-}
-
+/* --------GameInstructions.js-------- */
 .popup {
   position: fixed;
   top: 50%;
@@ -130,8 +196,8 @@ input {
   transform: translate(-50%, -50%);
   z-index: 1;
   background-color: #ffffff;
-  border: 1px solid #333;
-  box-shadow: 0px 0px 8px #333;
+  border: 1px solid #636262;
+  box-shadow: 0px 0px 8px #636262;
   padding: 20px;
   max-width: 400px;
 }
@@ -142,43 +208,40 @@ input {
   margin-bottom: 20px;
 }
 
-.instructions-link {
+.instructions-link-close {
   background: none;
   border: none;
   padding: 0;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   text-decoration: underline;
-  color: #d656d2;
+  color: #89a6cf;
 }
 
-.instructions-link:hover {
-  color: #d188ce;
-}
-
-.not-hidden {
-  font-weight: normal;
-  color: #333;
-}
-
-.highlighted {
-  font-weight: bold;
-  color: #d656d2;
-}
-
-.box:first-child {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  font-size: 32px;
-  padding-left: 24px;
-  padding-right: 24px;
-  border: 1px solid #333;
+.instructions-link-close:hover {
+  color: #a2b3cb;
 }
 
 @media (max-width: 900px) {
+  /* --------App.js--------*/
+  .App {
+    overflow: hidden;
+  }
+
+  .instructions-link {
+    right: 2%;
+  }
+
+  .reset-game-button {
+    right: 2%;
+  }
+
+  .article {
+    width: 100%;
+    margin-left: 7px;
+    margin-right: 0;
+  }
+
   .guess-words {
     width: 100%;
     max-height: 250px;
@@ -188,6 +251,7 @@ input {
     left: 0;
   }
 
+  /* --------GuessWords.js-------- */
   .words-box-wrapper {
     width: 100%;
   }
@@ -198,33 +262,34 @@ input {
     overflow-y: scroll;
   }
 
-  /*   .title {
-    font-size: 2em;
-    font-weight: bold;
-    background-color: red;
-    padding: 10px;
-    margin-bottom: 20px;
-  } */
-
   form {
     margin-bottom: 0px;
   }
 
-  .article {
-    width: 100%;
-    margin-right: 0;
-  }
+  /* --------GameInstructions.js-------- */
   .popup {
     top: 50%;
     left: 50%;
   }
-
-  .App {
-    overflow: hidden;
-  }
 }
+
 @media (max-width: 600px) {
+  /* --------App.js-------- */
+  .reset-game-button {
+    font-size: 14px;
+    top: 9px;
+  }
+  /* --------GameInstructions.js-------- */
+
   .instructions-text {
     font-size: 13px;
   }
 }
+
+@media (max-width: 460px) {
+  /* --------App.js-------- */
+  .reset-game-button {
+    top: 44px;
+  }
+}
+/* //fixa skrollen i fullt läge i .words-box-wrapper  */

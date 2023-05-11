@@ -7,9 +7,9 @@ function GameInstructions({ onClose }) {
         "Det här ordspelet går ut på att använda formuläret för att gissa på de
         gömda orden i artikeln. Målet är att lista ut artikelns rubrik. Varje
         gissat ord ger en poäng och ju färre poäng du har, desto bättre är din
-        prestation."
+        prestation. Temat är resor, platser och upplevelser."
       </p>
-      <button className="instructions-link" onClick={onClose}>
+      <button className="instructions-link-close" onClick={onClose}>
         Close
       </button>
     </div>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-/* import parse from "html-react-parser"; */
 import GuessWords from "./GuessWords";
 import { notHiddenWords } from "./VisibleWords";
 import GameInstructions from "./GameInstructions";
+import { url } from "./UrlArticles";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -11,9 +11,15 @@ function App() {
   const [hiddenWords, setHiddenWords] = useState([]);
   const [count, setCount] = useState(0);
   const [showInstructions, setShowInstructions] = useState(false);
-  /*   const [guessedWords, setGuessedWords] = useState([]);
-  const [alreadyGuessed, setAlreadyGuessed] = useState(false);
-  const [highlightedWordIndex, setHighlightedWordIndex] = useState(-1); */
+
+  /*   const resetGame = () => {
+    setCount(0);
+    setHiddenWord({ word: "", showCongratulations: false });
+    const newUrl = getRandomUrl();
+    setTitle("");
+    setExtract("");
+    setUrl(newUrl);
+  }; */
 
   const handleShowInstructions = () => {
     setShowInstructions(true);
@@ -88,36 +94,11 @@ function App() {
     }
   };
 
-  /*    useEffect(() => {
-    const url =
-      "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Korea"; 
-
-    const getTitleAndExtract = (json) => {
-      const { pages } = json.query;
-      const page = pages[Object.keys(pages)[0]];
-      return { title: page.title, extract: page.extract };
-    };
-
-    const fetchData = async () => {
-      try {
-        const resp = await fetch(url);
-        const json = await resp.json();
-        const { title, extract } = getTitleAndExtract(json);
-        setTitle(title);
-        setExtract(extract);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
-  }, []); */
-
   useEffect(() => {
-    const url =
-      "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Korea";
-    /*  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&generator=random&grnnamespace=0&prop=extracts&exchars=250&exsectionformat=wiki&format=json&grnlimit=1&grnfilterredir=nonredirect"; */
-    /* "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&generator=random&grnnamespace=0&grnlimit=1"; */
+    const getRandomUrl = () => {
+      const randomIndex = Math.floor(Math.random() * url.length);
+      return url[randomIndex];
+    };
 
     const getTitleAndExtract = (json) => {
       const { pages } = json.query;
@@ -127,7 +108,8 @@ function App() {
 
     const fetchData = async () => {
       try {
-        const resp = await fetch(url);
+        const randomUrl = getRandomUrl();
+        const resp = await fetch(randomUrl);
         const json = await resp.json();
         const { title, extract } = getTitleAndExtract(json);
         setTitle(title);
@@ -191,13 +173,7 @@ function App() {
                     style={{
                       backgroundColor: "#ccc",
                       display: "inline-block",
-                      /*        width:
-                        hiddenWord.word.length === title.length
-                          ? hiddenWord.word.length * 24 + "px"
-                          : hiddenWord.word.length * 18 + "px",
-                      height: hiddenWord.word === title ? "50px" : "auto", */
                       width: hiddenWord.word.length * 16 + "px",
-                      /* fontSize: hiddenWord.word === title ? "32px" : "inherit", */
                     }}
                   >
                     <span className="box-content">&nbsp;</span>
@@ -210,15 +186,6 @@ function App() {
                       display: "inline-block",
                     }}
                   >
-                    {/*             {hiddenWord.word.split(" ").map((word, index) => (
-                      <React.Fragment key={index}>
-                        {word === title && hiddenWord.showCongratulations ? (
-                          <h1>{word} </h1>
-                        ) : (
-                          <p>{word} </p>
-                        )}
-                      </React.Fragment>
-                    ))} */}
                     {hiddenWord.word.split(" ").map((word, index) => (
                       <React.Fragment key={index}>
                         {(word === title || hiddenWord.word === title) &&
@@ -234,8 +201,10 @@ function App() {
                       hiddenWord.word === title && (
                         <h2 className="winning-message">
                           Grattis! Du fick {count} poäng
+                          <button onClick={handlePlayAgain}>Spela igen?</button>
                         </h2>
                       )}
+
                     {showInstructions && (
                       <GameInstructions onClose={handleCloseInstructions} />
                     )}
