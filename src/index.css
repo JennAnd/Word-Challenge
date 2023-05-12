@@ -200,6 +200,7 @@ input {
   box-shadow: 0px 0px 8px #636262;
   padding: 20px;
   max-width: 400px;
+  transition: opacity 0.3 ease-in-out;
 }
 
 .instructions-text {
@@ -279,6 +280,12 @@ input {
     font-size: 14px;
     top: 9px;
   }
+
+  .instructions-link {
+    font-size: 13px;
+    right: 4%;
+  }
+
   /* --------GameInstructions.js-------- */
 
   .instructions-text {
@@ -290,6 +297,10 @@ input {
   /* --------App.js-------- */
   .reset-game-button {
     top: 44px;
+  }
+
+  .instructions-link {
+    right: 15%;
   }
 }
 /* //fixa skrollen i fullt läge i .words-box-wrapper  */

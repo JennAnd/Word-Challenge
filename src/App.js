@@ -12,15 +12,6 @@ function App() {
   const [count, setCount] = useState(0);
   const [showInstructions, setShowInstructions] = useState(false);
 
-  /*   const resetGame = () => {
-    setCount(0);
-    setHiddenWord({ word: "", showCongratulations: false });
-    const newUrl = getRandomUrl();
-    setTitle("");
-    setExtract("");
-    setUrl(newUrl);
-  }; */
-
   const handleShowInstructions = () => {
     setShowInstructions(true);
   };
@@ -94,36 +85,11 @@ function App() {
     }
   };
 
-  /* useEffect(() => {
-    const getRandomUrl = () => {
-      const randomIndex = Math.floor(Math.random() * url.length);
-      return url[randomIndex];
-    };
-
-    const getTitleAndExtract = (json) => {
-      const { pages } = json.query;
-      const page = pages[Object.keys(pages)[0]];
-      return { title: page.title, extract: page.extract };
-    };
-
-    const fetchData = async () => {
-      try {
-        const randomUrl = getRandomUrl();
-        const resp = await fetch(randomUrl);
-        const json = await resp.json();
-        const { title, extract } = getTitleAndExtract(json);
-        setTitle(title);
-        setExtract(extract);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
-  }, []); */
   const getRandomUrl = () => {
     const randomIndex = Math.floor(Math.random() * url.length);
-    return url[randomIndex];
+    const randomUrl = url[randomIndex];
+    localStorage.setItem("randomUrl", randomUrl);
+    return randomUrl;
   };
 
   const getTitleAndExtract = (json) => {
@@ -148,14 +114,21 @@ function App() {
     const randomUrl = getRandomUrl();
     fetchData(randomUrl);
   };
+
   const randomUrl = () => {
-    fetchData(); // call the fetchData function to fetch a new random URL and update the state variables
-    window.location.reload(); // refresh the page
+    const randomUrl = getRandomUrl();
+    fetchData(randomUrl);
+    window.location.reload();
   };
 
   useEffect(() => {
-    const randomUrl = getRandomUrl();
-    fetchData(randomUrl);
+    const savedUrl = localStorage.getItem("randomUrl");
+    if (savedUrl) {
+      fetchData(savedUrl);
+    } else {
+      const randomUrl = getRandomUrl();
+      fetchData(randomUrl);
+    }
   }, []);
 
   useEffect(() => {
@@ -243,9 +216,6 @@ function App() {
                           >
                             Spela igen?
                           </button>
-                          {/*  //resetta guessed-list närman trycker på knappen plus att sätta inputen not disabled */}
-                          {/*     //sätt en loading här när knappen klickas på, allmänt innan en ny artikel kommer, även i början i fetchen eller useffecten  */}
-                          {/*    //fixa även så att man inte kan reloada sidan innan spelet är slut för att få en ny artikel */}
                         </h2>
                       )}
 

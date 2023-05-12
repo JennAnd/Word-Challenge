@@ -1,26 +1,43 @@
-/* import React, { useState, useRef } from "react"; */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 import { notHiddenWords } from "./VisibleWords";
 
-function GuessWords({
-  hiddenWords,
-  /*  toggleWordVisibility, */
-  handleGuess,
-  guesses,
-  /*  count, */
-}) {
+function GuessWords({ hiddenWords, handleGuess }) {
+  const [guesses, setGuesses] = useState(() => {
+    const storedGuesses = localStorage.getItem("guesses");
+    return storedGuesses ? JSON.parse(storedGuesses) : [];
+  });
   const [gameOver, setGameOver] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("guesses", JSON.stringify(guesses));
+  }, [guesses]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const guess = e.target.guess.value;
+    const guessInput = e.target.guess;
+    const guess = guessInput.value.trim();
+    const regex = /^[a-öA-Ö0-9]+$/;
+
+    if (!guess || !regex.test(guess)) {
+      return;
+    }
+
     handleGuess(guess);
-    e.target.reset();
+    setGuesses([...guesses, { guess, isMatch: false }]);
+    guessInput.value = "";
+    guessInput.focus();
+
     if (guess.toLowerCase() === hiddenWords[0].word.toLowerCase()) {
       setGameOver(true);
     }
   };
+
+  useEffect(() => {
+    if (gameOver) {
+      localStorage.removeItem("guesses");
+    }
+  }, [gameOver]);
 
   return (
     <div className="words-box-wrapper">
@@ -28,7 +45,13 @@ function GuessWords({
         <form onSubmit={handleSubmit}>
           {" "}
           <label htmlFor="guess">Ditt ord:</label>
-          <input type="text" id="guess" name="guess" disabled={gameOver} />
+          <input
+            type="text"
+            id="guess"
+            name="guess"
+            disabled={gameOver}
+            autoComplete="off"
+          />
           <button className="submit-guess" type="submit" disabled={gameOver}>
             Gissa
           </button>
@@ -48,6 +71,9 @@ function GuessWords({
             if (notHiddenWords.includes(guess.guess.toLowerCase())) {
               return null;
             }
+            matchedWords.forEach((matchedWord) => {
+              guess.isMatch = true;
+            });
 
             if (
               !guess.isMatch &&
@@ -72,5 +98,4 @@ function GuessWords({
     </div>
   );
 }
-
 export default GuessWords;

@@ -12,15 +12,6 @@ function App() {
   const [count, setCount] = useState(0);
   const [showInstructions, setShowInstructions] = useState(false);
 
-  /*   const resetGame = () => {
-    setCount(0);
-    setHiddenWord({ word: "", showCongratulations: false });
-    const newUrl = getRandomUrl();
-    setTitle("");
-    setExtract("");
-    setUrl(newUrl);
-  }; */
-
   const handleShowInstructions = () => {
     setShowInstructions(true);
   };
@@ -94,32 +85,50 @@ function App() {
     }
   };
 
+  const getRandomUrl = () => {
+    const randomIndex = Math.floor(Math.random() * url.length);
+    const randomUrl = url[randomIndex];
+    localStorage.setItem("randomUrl", randomUrl);
+    return randomUrl;
+  };
+
+  const getTitleAndExtract = (json) => {
+    const { pages } = json.query;
+    const page = pages[Object.keys(pages)[0]];
+    return { title: page.title, extract: page.extract };
+  };
+
+  const fetchData = async (randomUrl) => {
+    try {
+      const resp = await fetch(randomUrl);
+      const json = await resp.json();
+      const { title, extract } = getTitleAndExtract(json);
+      setTitle(title);
+      setExtract(extract);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handlePlayAgain = () => {
+    const randomUrl = getRandomUrl();
+    fetchData(randomUrl);
+  };
+
+  const randomUrl = () => {
+    const randomUrl = getRandomUrl();
+    fetchData(randomUrl);
+    window.location.reload();
+  };
+
   useEffect(() => {
-    const getRandomUrl = () => {
-      const randomIndex = Math.floor(Math.random() * url.length);
-      return url[randomIndex];
-    };
-
-    const getTitleAndExtract = (json) => {
-      const { pages } = json.query;
-      const page = pages[Object.keys(pages)[0]];
-      return { title: page.title, extract: page.extract };
-    };
-
-    const fetchData = async () => {
-      try {
-        const randomUrl = getRandomUrl();
-        const resp = await fetch(randomUrl);
-        const json = await resp.json();
-        const { title, extract } = getTitleAndExtract(json);
-        setTitle(title);
-        setExtract(extract);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
+    const savedUrl = localStorage.getItem("randomUrl");
+    if (savedUrl) {
+      fetchData(savedUrl);
+    } else {
+      const randomUrl = getRandomUrl();
+      fetchData(randomUrl);
+    }
   }, []);
 
   useEffect(() => {
@@ -190,7 +199,7 @@ function App() {
                       <React.Fragment key={index}>
                         {(word === title || hiddenWord.word === title) &&
                         hiddenWord.showCongratulations ? (
-                          <h1>{word}</h1>
+                          <h1 className="title-word">{word}</h1>
                         ) : (
                           <p>{word} </p>
                         )}
@@ -201,7 +210,12 @@ function App() {
                       hiddenWord.word === title && (
                         <h2 className="winning-message">
                           Grattis! Du fick {count} poäng
-                          <button onClick={handlePlayAgain}>Spela igen?</button>
+                          <button
+                            className="reset-game-button"
+                            onClick={randomUrl}
+                          >
+                            Spela igen?
+                          </button>
                         </h2>
                       )}
 

@@ -25,6 +25,7 @@ export const notHiddenWords = [
   "är",
   "i",
   "av",
+  "typ",
   "på",
   "ut",
   "de",
@@ -107,6 +108,3 @@ export const notHiddenWords = [
   "8",
   "9",
 ];
-
-//Ett problem här är att finns en av dessa ord inte i en av artiklarna så beter den sig ändå som att den gör det,
-//Kolla först om någon av dessa ord finns? Annars sätta som en vanlig felgissning? Eller bara låta det vara som det är?
