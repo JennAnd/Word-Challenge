@@ -161,7 +161,7 @@ function App() {
               className="instructions-link"
               onClick={handleShowInstructions}
             >
-              Spelinstruktioner
+              Instruktioner
             </button>
           </header>
           <div className="guess-words">
