@@ -17,7 +17,7 @@ function GuessWords({ hiddenWords, handleGuess }) {
     e.preventDefault();
     const guessInput = e.target.guess;
     const guess = guessInput.value.trim();
-    const regex = /^[a-zA-Z0-9]+$/;
+    const regex = /^[a-öA-Ö0-9]+$/;
 
     if (!guess || !regex.test(guess)) {
       return;
@@ -61,6 +61,17 @@ function GuessWords({ hiddenWords, handleGuess }) {
         {guesses
           .slice(0)
           .reverse()
+          .filter((guess, index, array) => {
+            const normalizedGuess = guess.guess.toLowerCase();
+            const alreadyGuessed = array
+              .slice(0, index)
+              .some(
+                (guessedWord) =>
+                  guessedWord.guess.toLowerCase() === normalizedGuess
+              );
+
+            return !alreadyGuessed && !notHiddenWords.includes(normalizedGuess);
+          })
           .map((guess, index) => {
             const matchedWords = hiddenWords.filter(
               (wordObj) =>
@@ -68,9 +79,6 @@ function GuessWords({ hiddenWords, handleGuess }) {
             );
             const count = matchedWords.length;
 
-            if (notHiddenWords.includes(guess.guess.toLowerCase())) {
-              return null;
-            }
             matchedWords.forEach((matchedWord) => {
               guess.isMatch = true;
             });

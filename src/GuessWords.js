@@ -2,12 +2,19 @@ import React, { useState, useEffect } from "react";
 import "./index.css";
 import { notHiddenWords } from "./VisibleWords";
 
-function GuessWords({ hiddenWords, handleGuess }) {
-  const [guesses, setGuesses] = useState(() => {
+function GuessWords({
+  hiddenWords,
+  handleGuess,
+  gameOver,
+  setGameOver,
+  guesses,
+  setGuesses,
+}) {
+  /*   const [guesses, setGuesses] = useState(() => {
     const storedGuesses = localStorage.getItem("guesses");
     return storedGuesses ? JSON.parse(storedGuesses) : [];
-  });
-  const [gameOver, setGameOver] = useState(false);
+  }); */
+  /*   const [gameOver, setGameOver] = useState(false); */
 
   useEffect(() => {
     localStorage.setItem("guesses", JSON.stringify(guesses));
@@ -61,6 +68,17 @@ function GuessWords({ hiddenWords, handleGuess }) {
         {guesses
           .slice(0)
           .reverse()
+          .filter((guess, index, array) => {
+            const normalizedGuess = guess.guess.toLowerCase();
+            const alreadyGuessed = array
+              .slice(0, index)
+              .some(
+                (guessedWord) =>
+                  guessedWord.guess.toLowerCase() === normalizedGuess
+              );
+
+            return !alreadyGuessed && !notHiddenWords.includes(normalizedGuess);
+          })
           .map((guess, index) => {
             const matchedWords = hiddenWords.filter(
               (wordObj) =>
@@ -68,9 +86,6 @@ function GuessWords({ hiddenWords, handleGuess }) {
             );
             const count = matchedWords.length;
 
-            if (notHiddenWords.includes(guess.guess.toLowerCase())) {
-              return null;
-            }
             matchedWords.forEach((matchedWord) => {
               guess.isMatch = true;
             });

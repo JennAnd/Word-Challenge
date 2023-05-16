@@ -7,10 +7,39 @@ import { url } from "./UrlArticles";
 function App() {
   const [title, setTitle] = useState("");
   const [extract, setExtract] = useState("");
-  const [guesses, setGuesses] = useState([]);
+  /*   const [guesses, setGuesses] = useState([]); */
+  const [guesses, setGuesses] = useState(() => {
+    const storedGuesses = localStorage.getItem("guesses");
+    return storedGuesses ? JSON.parse(storedGuesses) : [];
+  });
   const [hiddenWords, setHiddenWords] = useState([]);
-  const [count, setCount] = useState(0);
   const [showInstructions, setShowInstructions] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [count, setCount] = useState(() => {
+    const storedCount = localStorage.getItem("count");
+    const parsedCount = parseInt(storedCount, 10);
+    return isNaN(parsedCount) ? 0 : parsedCount;
+  });
+
+  const incrementCount = () => {
+    setCount((prevCount) => {
+      const newCount = prevCount + 1;
+      localStorage.setItem("count", newCount.toString());
+      return newCount;
+    });
+  };
+
+  useEffect(() => {
+    const storedCount = localStorage.getItem("count");
+    const parsedCount = parseInt(storedCount, 10);
+    if (!isNaN(parsedCount)) {
+      setCount(parsedCount);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("count", count.toString());
+  }, [count]);
 
   const handleShowInstructions = () => {
     setShowInstructions(true);
@@ -38,9 +67,15 @@ function App() {
     const alreadyGuessed = guesses.some(
       (guessedWord) => guessedWord.guess.toLowerCase() === normalizedGuess
     );
-    if (notHiddenWords.includes(normalizedGuess) || alreadyGuessed) {
+
+    if (alreadyGuessed) {
+      return null;
+    }
+
+    if (notHiddenWords.includes(normalizedGuess)) {
       return;
     }
+
     setCount((prevCount) => prevCount + 1);
     const isMatch = hiddenWords.some(
       (wordObj) => wordObj.word.toLowerCase() === normalizedGuess
@@ -85,6 +120,15 @@ function App() {
     }
   };
 
+  const handleReset = () => {
+    localStorage.removeItem("guesses");
+    setGuesses([]);
+    setCount(0);
+    setGameOver(false);
+    const randomUrl = getRandomUrl();
+    fetchData(randomUrl);
+  };
+
   const getRandomUrl = () => {
     const randomIndex = Math.floor(Math.random() * url.length);
     const randomUrl = url[randomIndex];
@@ -110,16 +154,17 @@ function App() {
     }
   };
 
-  const handlePlayAgain = () => {
+  /*   const handlePlayAgain = () => {
     const randomUrl = getRandomUrl();
     fetchData(randomUrl);
   };
 
   const randomUrl = () => {
+    setCount(0);
+    localStorage.setItem("count", "0");
     const randomUrl = getRandomUrl();
     fetchData(randomUrl);
-    window.location.reload();
-  };
+  }; */
 
   useEffect(() => {
     const savedUrl = localStorage.getItem("randomUrl");
@@ -170,11 +215,71 @@ function App() {
               toggleWordVisibility={toggleWordVisibility}
               handleGuess={handleGuess}
               guesses={guesses}
+              setGuesses={setGuesses}
               count={count}
+              gameOver={gameOver}
+              setGameOver={setGameOver}
             />
           </div>
           <div className="article-box">
             {hiddenWords.map((hiddenWord, index) => (
+              <React.Fragment key={index}>
+                {hiddenWord.isHidden ? (
+                  <div
+                    className="box"
+                    style={{
+                      backgroundColor: "#ccc",
+                      display: "inline-block",
+                      width: hiddenWord.word.length * 16 + "px",
+                    }}
+                  >
+                    <span className="box-content">&nbsp;</span>
+                    <span className="box-text">{hiddenWord.word.length}</span>
+                  </div>
+                ) : (
+                  <div className="title" style={{ display: "inline-block" }}>
+                    {hiddenWord.word.split(" ").map((word, index) => (
+                      <React.Fragment key={index}>
+                        {(word === title || hiddenWord.word === title) &&
+                        hiddenWord.showCongratulations ? (
+                          <h1 className="title-word">{word}</h1>
+                        ) : (
+                          <p>{word} </p>
+                        )}
+                      </React.Fragment>
+                    ))}
+
+                    {hiddenWord.showCongratulations &&
+                    hiddenWord.word === title ? (
+                      <h2 className="winning-message">
+                        Grattis! Du fick {count} poäng
+                        <button
+                          className="reset-game-button"
+                          onClick={handleReset}
+                        >
+                          Spela igen?
+                        </button>
+                      </h2>
+                    ) : hiddenWord.showCongratulations ? null : (
+                      hiddenWords.some((word) => word.isHidden === true) && (
+                        <button
+                          className="reset-game-button"
+                          onClick={handleReset}
+                        >
+                          Ny artikel
+                        </button>
+                      )
+                    )}
+
+                    {showInstructions && (
+                      <GameInstructions onClose={handleCloseInstructions} />
+                    )}
+                  </div>
+                )}
+                {index < hiddenWords.length - 1 && <span>&nbsp;</span>}
+              </React.Fragment>
+            ))}
+            {/*      {hiddenWords.map((hiddenWord, index) => (
               <React.Fragment key={index}>
                 {hiddenWord.isHidden ? (
                   <div
@@ -207,17 +312,24 @@ function App() {
                     ))}
 
                     {hiddenWord.showCongratulations &&
-                      hiddenWord.word === title && (
-                        <h2 className="winning-message">
-                          Grattis! Du fick {count} poäng
-                          <button
-                            className="reset-game-button"
-                            onClick={randomUrl}
-                          >
-                            Spela igen?
-                          </button>
-                        </h2>
-                      )}
+                    hiddenWord.word === title ? (
+                      <h2 className="winning-message">
+                        Grattis! Du fick {count} poäng
+                        <button
+                          className="reset-game-button"
+                          onClick={handleReset}
+                        >
+                          Spela igen?
+                        </button>
+                      </h2>
+                    ) : hiddenWord.showCongratulations ? null : (
+                      <button
+                        className="reset-game-button"
+                        onClick={handleReset}
+                      >
+                        Ny artikel
+                      </button>
+                    )}
 
                     {showInstructions && (
                       <GameInstructions onClose={handleCloseInstructions} />
@@ -226,7 +338,7 @@ function App() {
                 )}
                 {index < hiddenWords.length - 1 && <span>&nbsp;</span>}
               </React.Fragment>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>

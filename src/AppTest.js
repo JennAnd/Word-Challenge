@@ -9,8 +9,32 @@ function App() {
   const [extract, setExtract] = useState("");
   const [guesses, setGuesses] = useState([]);
   const [hiddenWords, setHiddenWords] = useState([]);
-  const [count, setCount] = useState(0);
   const [showInstructions, setShowInstructions] = useState(false);
+  const [count, setCount] = useState(() => {
+    const storedCount = localStorage.getItem("count");
+    const parsedCount = parseInt(storedCount, 10);
+    return isNaN(parsedCount) ? 0 : parsedCount;
+  });
+
+  const incrementCount = () => {
+    setCount((prevCount) => {
+      const newCount = prevCount + 1;
+      localStorage.setItem("count", newCount.toString());
+      return newCount;
+    });
+  };
+
+  useEffect(() => {
+    const storedCount = localStorage.getItem("count");
+    const parsedCount = parseInt(storedCount, 10);
+    if (!isNaN(parsedCount)) {
+      setCount(parsedCount);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("count", count.toString());
+  }, [count]);
 
   const handleShowInstructions = () => {
     setShowInstructions(true);
@@ -38,9 +62,15 @@ function App() {
     const alreadyGuessed = guesses.some(
       (guessedWord) => guessedWord.guess.toLowerCase() === normalizedGuess
     );
-    if (notHiddenWords.includes(normalizedGuess) || alreadyGuessed) {
+
+    if (alreadyGuessed) {
+      return null;
+    }
+
+    if (notHiddenWords.includes(normalizedGuess)) {
       return;
     }
+
     setCount((prevCount) => prevCount + 1);
     const isMatch = hiddenWords.some(
       (wordObj) => wordObj.word.toLowerCase() === normalizedGuess
@@ -116,6 +146,8 @@ function App() {
   };
 
   const randomUrl = () => {
+    setCount(0);
+    localStorage.setItem("count", "0");
     const randomUrl = getRandomUrl();
     fetchData(randomUrl);
     window.location.reload();
@@ -161,7 +193,10 @@ function App() {
               className="instructions-link"
               onClick={handleShowInstructions}
             >
-              Spelinstruktioner
+              Instruktioner
+            </button>
+            <button className="end-game-button" onClick={randomUrl}>
+              Ny artikel
             </button>
           </header>
           <div className="guess-words">

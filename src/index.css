@@ -52,6 +52,24 @@
   color: #a2b3cb;
 }
 
+/* .end-game-button {
+  position: absolute;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  color: #89a6cf;
+  right: 40px;
+  font-size: 20px;
+  top: 5px;
+} */
+
+/* .end-game-button:hover {
+  color: #a2b3cb;
+} */
+
 .guess-words {
   width: 20%;
   top: 0;
@@ -135,7 +153,8 @@
   cursor: pointer;
   text-decoration: underline;
   color: #89a6cf;
-  right: 40px;
+  left: 35%;
+  top: 6px;
 }
 
 .instructions-link:hover {
@@ -148,11 +167,36 @@
   padding-left: 10px;
 }
 
+/* .words-box-wrapper {
+  width: 100%;
+  margin-top: 20px;
+  max-height: 100vh;
+  overflow-y: scroll;
+} */
 .words-box-wrapper {
   width: 100%;
   margin-top: 20px;
-  /*   max-height: 100vh;
-  overflow-y: scroll; */
+  max-height: 100vh;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #cdcccc #f1f1f1;
+}
+
+.words-box-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.words-box-wrapper::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.words-box-wrapper::-webkit-scrollbar-thumb {
+  background-color: #cdcccc;
+  border-radius: 4px;
+}
+
+.words-box-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: #b5b5b5;
 }
 
 button.submit-guess {
@@ -161,6 +205,7 @@ button.submit-guess {
   padding: 6px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  border: 1px solid #717171;
   border-radius: 4px;
 }
 
@@ -229,12 +274,16 @@ input {
   }
 
   .instructions-link {
-    right: 2%;
+    right: 50%;
   }
 
   .reset-game-button {
     right: 2%;
   }
+
+  /*   .end-game-button {
+    right: 2%;
+  } */
 
   .article {
     width: 100%;
@@ -260,6 +309,8 @@ input {
     max-height: 150px;
     padding-left: 22%;
     overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #cdcccc #f1f1f1;
   }
 
   form {
@@ -280,9 +331,14 @@ input {
     top: 9px;
   }
 
+  /*   .end-game-button {
+    font-size: 14px;
+    top: 9px;
+  } */
+
   .instructions-link {
     font-size: 13px;
-    right: 4%;
+    left: 40%;
   }
 
   /* --------GameInstructions.js-------- */
@@ -298,8 +354,12 @@ input {
     top: 44px;
   }
 
+  /*   .end-game-button {
+    top: 44px;
+    right: 18%;
+  } */
+
   .instructions-link {
-    right: 16%;
+    left: 60%;
   }
 }
-/* //fixa skrollen i fullt läge i .words-box-wrapper  */
