@@ -1,4 +1,4 @@
-export const url = [
+/* export const url = [
   "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Manta",
   "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Maldiverna",
   "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Tigerhaj",
@@ -12,4 +12,20 @@ export const url = [
   "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Safari",
   "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Korallrev",
   "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Snorkling",
+]; */
+
+export const url = [
+  "Manta",
+  "Maldiverna",
+  "Tigerhaj",
+  "Fridykning",
+  "Flygplan",
+  "Tempel",
+  "Språk",
+  "Regnskog",
+  "Palmer",
+  "Surfing",
+  "Safari",
+  "Korallrev",
+  "Snorkling",
 ];

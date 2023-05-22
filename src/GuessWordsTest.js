@@ -2,12 +2,19 @@ import React, { useState, useEffect } from "react";
 import "./index.css";
 import { notHiddenWords } from "./VisibleWords";
 
-function GuessWords({ hiddenWords, handleGuess }) {
-  const [guesses, setGuesses] = useState(() => {
+function GuessWords({
+  hiddenWords,
+  handleGuess,
+  gameOver,
+  setGameOver,
+  guesses,
+  setGuesses,
+}) {
+  /*   const [guesses, setGuesses] = useState(() => {
     const storedGuesses = localStorage.getItem("guesses");
     return storedGuesses ? JSON.parse(storedGuesses) : [];
-  });
-  const [gameOver, setGameOver] = useState(false);
+  }); */
+  /*   const [gameOver, setGameOver] = useState(false); */
 
   useEffect(() => {
     localStorage.setItem("guesses", JSON.stringify(guesses));

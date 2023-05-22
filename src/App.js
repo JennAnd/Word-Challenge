@@ -131,10 +131,23 @@ function App() {
 
   const getRandomUrl = () => {
     const randomIndex = Math.floor(Math.random() * url.length);
-    const randomUrl = url[randomIndex];
-    localStorage.setItem("randomUrl", randomUrl);
-    return randomUrl;
+    const baseUrl =
+      "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=";
+    const randomTitle = url[randomIndex];
+    localStorage.setItem("randomTitle", randomTitle);
+    return baseUrl + randomTitle;
   };
+
+  useEffect(() => {
+    const savedTitle = localStorage.getItem("randomTitle");
+    if (savedTitle) {
+      const randomUrl = getRandomUrl();
+      fetchData(randomUrl);
+    } else {
+      const randomUrl = getRandomUrl();
+      fetchData(randomUrl);
+    }
+  }, []);
 
   const getTitleAndExtract = (json) => {
     const { pages } = json.query;
@@ -153,28 +166,6 @@ function App() {
       console.error(err);
     }
   };
-
-  /*   const handlePlayAgain = () => {
-    const randomUrl = getRandomUrl();
-    fetchData(randomUrl);
-  };
-
-  const randomUrl = () => {
-    setCount(0);
-    localStorage.setItem("count", "0");
-    const randomUrl = getRandomUrl();
-    fetchData(randomUrl);
-  }; */
-
-  useEffect(() => {
-    const savedUrl = localStorage.getItem("randomUrl");
-    if (savedUrl) {
-      fetchData(savedUrl);
-    } else {
-      const randomUrl = getRandomUrl();
-      fetchData(randomUrl);
-    }
-  }, []);
 
   useEffect(() => {
     const titleWords = title.split(" ");
