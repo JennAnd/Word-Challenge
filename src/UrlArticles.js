@@ -1,19 +1,3 @@
-/* export const url = [
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Manta",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Maldiverna",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Tigerhaj",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Fridykning",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Flygplan",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Tempel",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Språk",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Regnskog",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Palmer",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Surfing",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Safari",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Korallrev",
-  "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=Snorkling",
-]; */
-
 export const url = [
   "Manta",
   "Maldiverna",

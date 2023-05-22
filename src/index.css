@@ -52,7 +52,7 @@
   color: #a2b3cb;
 }
 
-/* .end-game-button {
+.end-game-button {
   position: absolute;
   background: none;
   border: none;
@@ -64,11 +64,11 @@
   right: 40px;
   font-size: 20px;
   top: 5px;
-} */
+}
 
-/* .end-game-button:hover {
+.end-game-button:hover {
   color: #a2b3cb;
-} */
+}
 
 .guess-words {
   width: 20%;
@@ -167,12 +167,6 @@
   padding-left: 10px;
 }
 
-/* .words-box-wrapper {
-  width: 100%;
-  margin-top: 20px;
-  max-height: 100vh;
-  overflow-y: scroll;
-} */
 .words-box-wrapper {
   width: 100%;
   margin-top: 20px;
@@ -280,10 +274,9 @@ input {
   .reset-game-button {
     right: 2%;
   }
-
-  /*   .end-game-button {
+  .end-game-button {
     right: 2%;
-  } */
+  }
 
   .article {
     width: 100%;
@@ -330,13 +323,13 @@ input {
     font-size: 14px;
     top: 9px;
   }
-
-  /*   .end-game-button {
+  .end-game-button {
     font-size: 14px;
     top: 9px;
-  } */
+  }
 
   .instructions-link {
+    top: 1px;
     font-size: 13px;
     left: 40%;
   }
@@ -353,11 +346,11 @@ input {
   .reset-game-button {
     top: 44px;
   }
-
-  /*   .end-game-button {
-    top: 44px;
-    right: 18%;
-  } */
+  .end-game-button {
+    top: 74px;
+    right: 16%;
+    margin-left: 4px;
+  }
 
   .instructions-link {
     left: 60%;
