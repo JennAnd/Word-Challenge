@@ -122,6 +122,7 @@ function App() {
     const randomIndex = Math.floor(Math.random() * url.length);
     const baseUrl =
       "https://sv.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&format=json&titles=";
+
     const randomTitle = url[randomIndex];
     return baseUrl + randomTitle;
   };
