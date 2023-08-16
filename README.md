@@ -2,4 +2,4 @@
 
 ### Deployment
 
-https://word-challange.vercel.app/
+https://word-challenge.vercel.app/
